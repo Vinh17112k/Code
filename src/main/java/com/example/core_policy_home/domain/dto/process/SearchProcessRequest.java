@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
 public class SearchProcessRequest extends BaseDTO {
     private String name;
     private String processCode;

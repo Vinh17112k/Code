@@ -31,16 +31,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -325,81 +318,6 @@ public class DataUtils {
   private static final DateTimeFormatter cacheKeyFormatter = DateTimeFormatter
       .ofPattern("yyyyMMdd");
 
-  public static String generatePolicyCacheKey(@NotBlank String processCode,
-      @NotBlank String serviceCode, @NotNull LocalDateTime transactionDate) {
-    return processCode + "|" + DataUtils.nvl(serviceCode) + "|"
-        + transactionDate.format(cacheKeyFormatter);
-  }
-
-  public static String generateCalculateFee(
-      @NotBlank String transactionChannel,
-      @NotBlank String processCode, @NotBlank String serviceCode,
-      @NotNull LocalDate transactionDate) {
-    return transactionChannel + "|" + processCode + "|" + serviceCode + "|" + transactionDate
-        .format(cacheKeyFormatter);
-  }
-
-
-  public static String generateMd5Hex(List<String> list) {
-    if (Boolean.TRUE.equals(isNullOrEmpty(list))) {
-      return null;
-    }
-    Collections.sort(list);
-    return DigestUtils.md5Hex(String.join(Constants.RegexPattern.COMMA, list));
-  }
-
-  public static void trimValues(Object model) {
-    Field[] fields = model.getClass().getDeclaredFields();
-    for (Field field : fields) {
-      if ("java.lang.String".equals(field.getGenericType().getTypeName())) {
-        String methodGet = "get" + (field.getName().charAt(0) + "").toUpperCase() + field.getName().substring(1);
-        try {
-          String value = (String) executeMethod(methodGet, model);
-          if (value != null) {
-            String methodSet = "set" + (field.getName().charAt(0) + "").toUpperCase() + field.getName().substring(1);
-            executeMethod(methodSet, model, value.trim());
-          }
-        } catch (Exception ex) {
-          log.error(ex.getMessage(), ex);
-        }
-      }
-    }
-  }
-
-  public static <T> Method getMethod(String methodName, Class<T> clazz, Class<?>... typeParams) throws NoSuchMethodException {
-    return clazz.getDeclaredMethod(methodName, typeParams);
-  }
-
-  public static <T> Object executeMethod(String methodName, T objectInstance, Object... params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Class<?>[] typeParams = new Class[params.length];
-    for (int i = 0; i < params.length; i++) {
-      typeParams[i] = params[i].getClass();
-    }
-    Method method = getMethod(methodName, objectInstance.getClass(), typeParams);
-    return method.invoke(objectInstance, params);
-  }
-
-  public static String camelToPython(String str) {
-    StringBuilder result = new StringBuilder();
-    for (int i = 0; i < str.length(); i++) {
-      String chain = str.charAt(i) + "";
-      if (Character.isUpperCase(str.charAt(i))) {
-        chain = ("_" + str.charAt(i)).toLowerCase();
-      }
-      result.append(chain);
-    }
-    return result.toString();
-  }
-
-  public static <T> List<String> validate(T obj) {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    Validator validator = factory.getValidator();
-    Set<ConstraintViolation<T>> violations = validator.validate(obj);
-    if (!CollectionUtils.isEmpty(violations)) {
-      return violations.stream().map(ConstraintViolation::getMessage).map(MessageUtils::getMessage).collect(Collectors.toList());
-    }
-    return Collections.emptyList();
-  }
   public static boolean isOUTSTATUS(Integer value) {
 
     return value.compareTo(Constants.STATUS_SERVICE.ACTIVE) >= 0||value.compareTo(Constants.STATUS_SERVICE.INACTIVE) >= 0;

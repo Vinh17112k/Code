@@ -22,9 +22,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.AuditOverrides;
-import org.hibernate.envers.Audited;
 
 /**
  * Chi tiết cách tính (pol_fee_expr_rules)
@@ -40,14 +37,6 @@ import org.hibernate.envers.Audited;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-@SuppressWarnings({"java:S1710"})
-@Audited
-@AuditOverrides({
-    @AuditOverride(forClass = PolicyFeeExpressionRule.class),
-    @AuditOverride(forClass = BaseIdEntity.class),
-    @AuditOverride(forClass = BaseEntity.class),
-})
 public class PolicyFeeExpressionRule extends BaseIdEntity {
 
   @Basic
@@ -95,25 +84,4 @@ public class PolicyFeeExpressionRule extends BaseIdEntity {
   @Column(name = "expression_detail_id", nullable = true)
   private BigDecimal expressionDetailId;
 
-  @Override
-  @PrePersist
-  public void prePersist() {
-    super.prePersist();
-    if (this.priority == null) {
-      this.priority = 1;
-    }
-  }
-
-  @Getter
-  @AllArgsConstructor
-  public enum CalculationMethod {
-
-    FREE(1, "FREE"),
-    AS_PERCENTAGE(2, "AS_PERCENTAGE"),
-    AS_BLOCK(3, "AS_BLOCK"),
-    ;
-
-    private final int value;
-    private final String code;
-  }
 }

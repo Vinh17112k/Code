@@ -16,17 +16,15 @@ import com.example.core_policy_home.mapper.ServiceUpgradeMapper;
 import com.example.core_policy_home.model.Process;
 import com.example.core_policy_home.repository.ProcessRepository;
 import com.example.core_policy_home.service.ServiceService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,12 +37,10 @@ public class ServiceController implements ServiceApi {
   private final ServiceUpgradeMapper serviceUpgradeMapper  = Mappers.getMapper(ServiceUpgradeMapper.class);
 
   @Override
-  @Operation(summary = "add service upgrade")
   public ServiceUpgradeAddResponseDTO create(@RequestBody ServiceUpgradeAddRequestDTO data) {
     return serviceUpgradeMapper.fromEntityToAddUpgradeResponse(serviceService.addServiceUpgrade(data));
   }
   @Override
-  @Operation(summary = "update service upgrade")
   public ServiceUpgradeEditResponseDTO update(ServiceUpgradeEditRequestDTO data) {
     return serviceUpgradeMapper.fromEntityToEditUpgradeResponse(serviceService.updateServiceUpgrade(data));
   }

@@ -23,10 +23,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.AuditOverrides;
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 /**
  * Công thức(pol_fee_exprs)
@@ -42,14 +38,6 @@ import org.hibernate.envers.NotAudited;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-@SuppressWarnings({"java:S1710"})
-@Audited
-@AuditOverrides({
-    @AuditOverride(forClass = PolicyFeeExpression.class),
-    @AuditOverride(forClass = BaseIdEntity.class),
-    @AuditOverride(forClass = BaseEntity.class),
-})
 public class PolicyFeeExpression extends BaseIdEntity {
 
   @Basic
@@ -105,44 +93,4 @@ public class PolicyFeeExpression extends BaseIdEntity {
 
   @Column(name = "policy_id")
   private Long policyId;
-  @Override
-  @PrePersist
-  public void prePersist() {
-    super.prePersist();
-    if (this.roundingType == null) {
-      this.roundingType = RoundingType.FLOOR.getValue();
-    }
-    if (this.includeSurcharge == null) {
-      this.includeSurcharge = false;
-    }
-    if (this.type == null) {
-      this.type = FeeExpressionType.TEMPLATE.getValue();
-    }
-  }
-
-  @Getter
-  @AllArgsConstructor
-  public enum RoundingType {
-
-    FLOOR(1, "FLOOR"),
-    CEIL(2, "CEIL"),
-    NO_ROUND(3, "NO_ROUND"),
-    ;
-
-    private final int value;
-    private final String code;
-
-  }
-
-  @Getter
-  @AllArgsConstructor
-  public enum FeeExpressionType {
-
-    TEMPLATE(1, "TEMPLATE"),
-    CONCRETE(2, "CONCRETE"),
-    ;
-
-    private final int value;
-    private final String code;
-  }
 }

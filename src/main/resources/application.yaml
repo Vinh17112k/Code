@@ -1,0 +1,30 @@
+datasource:
+  url: jdbc:mysql://localhost:3306/core_policy?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true&jdbcCompliantTruncation=false
+  username: root
+  password: 889910
+  driver-class-name: org.mariadb.jdbc.Driver
+  hikari:
+    connection-test-query: SELECT 1
+    connection-timeout: 30000
+    idle-timeout: 60000
+    max-lifetime: 1800000
+    maximum-pool-size: 30
+    minimum-idle: 5
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        format_sql: true
+      org:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+          envers:
+            do_not_audit_optimistic_locking_field: false

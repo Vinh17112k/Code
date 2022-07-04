@@ -1,7 +1,6 @@
 package com.example.core_policy_home.domain.dto.service;
 
 import com.example.core_policy_home.domain.BaseDTO;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,11 +16,9 @@ import org.springframework.validation.annotation.Validated;
  * @since : 11/25/2020, Wed
  **/
 @Data
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Schema(description = "Thông tin dịch vụ")
 @Validated
 public class ServiceDTO extends BaseDTO {
 

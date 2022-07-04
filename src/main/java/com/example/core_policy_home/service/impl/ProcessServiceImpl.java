@@ -18,17 +18,14 @@ import com.example.core_policy_home.model.Process;
 import com.example.core_policy_home.repository.MappingProcessServiceRepository;
 import com.example.core_policy_home.repository.ProcessRepository;
 import com.example.core_policy_home.service.ProcessService;
-import com.example.core_policy_home.validator.CommonValidator;
 import com.example.core_policy_home.validator.InputValidator;
 import com.example.core_policy_home.validator.ProcessValidator;
-import java.lang.constant.Constable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,8 +48,6 @@ public class ProcessServiceImpl implements ProcessService {
     private InputValidator inputValidator;
     @Autowired
     private ProcessValidator processValidator;
-    @Autowired
-    private CommonValidator commonValidator;
     private final ProcessMapper processMapper;
 
     @Override

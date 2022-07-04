@@ -11,9 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.AuditOverrides;
-import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "mapping_process_service")
@@ -22,14 +19,6 @@ import org.hibernate.envers.Audited;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-@SuppressWarnings({"java:S1710"})
-@Audited
-@AuditOverrides({
-        @AuditOverride(forClass = MappingProcessService.class),
-        @AuditOverride(forClass = BaseIdEntity.class),
-        @AuditOverride(forClass = BaseEntity.class),
-})
 public class MappingProcessService extends BaseIdEntity {
   @Column(name = "process_id")
   private Long processId;

@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
 public class ProcessDTO extends BaseDTO {
   private Long id;
   private String name;

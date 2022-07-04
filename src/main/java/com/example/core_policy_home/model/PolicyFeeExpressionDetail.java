@@ -21,10 +21,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.AuditOverrides;
-import org.hibernate.envers.Audited;
-
 /**
  * Chi tiết công thức(pol_fee_expr_details)
  *
@@ -39,14 +35,6 @@ import org.hibernate.envers.Audited;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-@SuppressWarnings({"java:S1710"})
-@Audited
-@AuditOverrides({
-    @AuditOverride(forClass = PolicyFeeExpressionDetail.class),
-    @AuditOverride(forClass = BaseIdEntity.class),
-    @AuditOverride(forClass = BaseEntity.class),
-})
 public class PolicyFeeExpressionDetail extends BaseIdEntity {
 
   @Basic
@@ -68,18 +56,6 @@ public class PolicyFeeExpressionDetail extends BaseIdEntity {
 //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "detail",
 //      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 //  private List<PolicyFeeExpressionRule> rules = new ArrayList<>();
-
-  @Override
-  @PrePersist
-  public void prePersist() {
-    super.prePersist();
-    if (this.priority == null) {
-      this.priority = 1;
-    }
-    if (this.calculationScope == null) {
-      this.calculationScope = CalculationScope.WHOLE_TRANSACTION.getValue();
-    }
-  }
 
   @Getter
   @AllArgsConstructor

@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
 public class SearchProcessResponse {
     private Long id;
     private String name;

@@ -21,9 +21,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.AuditOverrides;
-import org.hibernate.envers.Audited;
 
 /**
  * Bảng chính sách policies
@@ -39,14 +36,6 @@ import org.hibernate.envers.Audited;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-@SuppressWarnings({"java:S1710"})
-@Audited
-@AuditOverrides({
-    @AuditOverride(forClass = Policy.class),
-    @AuditOverride(forClass = BaseIdEntity.class),
-    @AuditOverride(forClass = BaseEntity.class),
-})
 public class Policy extends BaseIdEntity {
 
   @Basic
@@ -85,38 +74,4 @@ public class Policy extends BaseIdEntity {
   @Basic
   @Column(name = "policy_version", nullable = true)
   private Integer policyVersion;
-
-//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "policy",
-//      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-//  private List<PolicyFeeExpression> feeExpressions = new ArrayList<>();
-//
-//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "policy",
-//      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-//  private List<PolicyMapping> policyMappings = new ArrayList<>();
-
-  @Override
-  @PrePersist
-  public void prePersist() {
-    super.prePersist();
-    if (this.status == null) {
-      this.status = CommonStatusEnum.ENABLED.getValue();
-    }
-    if (this.policyType == null) {
-      this.policyType = PolicyType.FEE.getValue();
-    }
-    if (this.code == null) {
-      this.code = "";
-    }
-  }
-
-  @Getter
-  @AllArgsConstructor
-  public enum PolicyType {
-
-    FEE(1, "FEE"),
-    ;
-
-    private final int value;
-    private final String code;
-  }
 }

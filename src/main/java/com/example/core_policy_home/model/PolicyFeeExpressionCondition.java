@@ -25,9 +25,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.AuditOverrides;
-import org.hibernate.envers.Audited;
 
 /**
  * Điều kiện tính(pol_fee_expr_conds)
@@ -43,14 +40,6 @@ import org.hibernate.envers.Audited;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-@SuppressWarnings({"java:S1710"})
-@Audited
-@AuditOverrides({
-    @AuditOverride(forClass = PolicyFeeExpressionCondition.class),
-    @AuditOverride(forClass = BaseIdEntity.class),
-    @AuditOverride(forClass = BaseEntity.class),
-})
 public class PolicyFeeExpressionCondition extends BaseIdEntity {
 
   @Basic

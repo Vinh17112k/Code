@@ -11,13 +11,12 @@ import com.example.core_policy_home.domain.dto.process.ProcessResponseNameAndId;
 import com.example.core_policy_home.domain.dto.process.SearchProcessRequest;
 import com.example.core_policy_home.domain.dto.process.SearchProcessResponse;
 import com.example.core_policy_home.service.ProcessService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,20 +28,16 @@ public class ProcessController implements ProcessApi {
   @Autowired
   private ProcessService processService;
   @Override
-  @Operation(summary = "add service")
   public ProcessDTO create(@RequestBody ProcessRequestDTO data) {
     return processService.create(data);
   }
 
   @Override
-
-  @Operation(summary = "update service")
   public ProcessDTO update(@RequestBody ProcessEditRequestDTO data) {
     return processService.updateProcess(data);
   }
 
   @Override
-  @Operation(summary = "delete process")
   public boolean delete(Long id) {
     return processService.delete(id);
   }
